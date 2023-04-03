@@ -8,7 +8,7 @@ namespace PipelinesTest
         public Recording(Project project, TimeSpan ts, string comment)
         {
             this.Project = project.Title;
-            this.Tag = project.Tag;
+            this.Tag = project.ProjectNumber;
             this.Duration = ts;
             this.Comment= comment;
             this.Date = DateTimeOffset.Now;
@@ -25,7 +25,7 @@ namespace PipelinesTest
 
         public override string ToString()
         {
-            return $"{this.Project};{this.Tag};{this.Duration.Hours}:{this.Duration.Minutes};{Date.ToString("dd.MM.yyyy")};{Comment}";
+            return $"{this.Project};{this.Tag};{this.Duration.ToString()};{Date.ToString("dd.MM.yyyy")};{Comment}";
         }
     }
 }

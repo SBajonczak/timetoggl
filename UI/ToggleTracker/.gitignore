@@ -7,7 +7,6 @@
 .clang_complete
 .gcc-flags.json
 .pio
-
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json

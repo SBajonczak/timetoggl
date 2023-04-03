@@ -4,6 +4,8 @@ using System.Diagnostics;
 namespace PipelinesTest
 {
 
+
+
     public class AppManager
     {
         public enum State
@@ -21,7 +23,7 @@ namespace PipelinesTest
             None
         }
 
-        Stopwatch sw;
+        public Stopwatch sw { get; private set; }
         private int CurrentSelectedPosition = 0;
         public TimeSpan ElapsedTime { get; private set; }
 
@@ -32,7 +34,7 @@ namespace PipelinesTest
         public event EventHandler<int> PreviousElement;
         public event EventHandler<int> NextElement;
 
-        public event EventHandler ButtonPressed;
+        public event EventHandler<StateArgs> ButtonPressed;
 
 
         protected void OnNext(int index)
@@ -44,12 +46,12 @@ namespace PipelinesTest
             }
         }
 
-        protected void OnSelected()
+        protected void OnSelected(State before, State after)
         {
-            EventHandler handler = ButtonPressed;
+            EventHandler<StateArgs> handler = ButtonPressed;
             if (handler != null)
             {
-                handler(this, null);
+                handler(this, new StateArgs(before, after));
             }
         }
 
@@ -82,18 +84,10 @@ namespace PipelinesTest
                     if (inputType == InputType.ButtonPressed)
                     {
                         sw.Start();
-                        this.CurrentState = State.Running;
-                    }
-
-                    break;
-                case State.Running:
-                    if (inputType == InputType.ButtonPressed)
-                    {
-                        this.ElapsedTime = sw.Elapsed;
-                        sw.Stop();
-                        OnSelected();
+                        OnSelected(this.CurrentState, State.Selecting);
                         this.CurrentState = State.Selecting;
                     }
+
                     break;
                 case State.Selecting:
                     switch (inputType)
@@ -106,12 +100,22 @@ namespace PipelinesTest
                             break;
                         case InputType.ButtonPressed:
                             sw.Start();
-                            OnSelected();
+                            OnSelected(CurrentState, State.Running);
                             this.CurrentState = State.Running;
                             break;
 
                     }
                     break;
+                case State.Running:
+                    if (inputType == InputType.ButtonPressed)
+                    {
+                        this.ElapsedTime = sw.Elapsed;
+                        sw.Stop();
+                        OnSelected(CurrentState, State.Stopped);
+                        this.CurrentState = State.Stopped;
+                    }
+                    break;
+
             }
         }
 
