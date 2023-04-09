@@ -1,11 +1,4 @@
-﻿using PipelinesTest;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace client
+﻿namespace Hardware.Driver
 {
     public class Exporter
     {
@@ -13,7 +6,7 @@ namespace client
         {
             get
             {
-                return String.Concat($"Zeiten{DateTime.Now.ToString("MMMM.yyyy")}.csv");
+                return string.Concat($"Zeiten{DateTime.Now.ToString("MMMM.yyyy")}.csv");
             }
         }
         public Exporter()
@@ -23,7 +16,7 @@ namespace client
         public void Write(Recording r)
         {
 
-            Stream f= File.Open(FullPathWithFileName, FileMode.OpenOrCreate| FileMode.Append);
+            Stream f = File.Open(FullPathWithFileName, FileMode.OpenOrCreate | FileMode.Append);
             using (StreamWriter w = new StreamWriter(f))
             {
                 w.WriteLine(r.ToString());

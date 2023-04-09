@@ -1,18 +1,11 @@
-﻿using PipelinesTest;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace client
+﻿namespace Hardware.Driver
 {
     /// <summary>
     /// Argumentclass, when the timetracking was changed
     /// </summary>
     public class TimerTrackingStateChangedArgs
     {
-        
+
         /// <summary>
         /// State before.
         /// </summary>
@@ -28,10 +21,11 @@ namespace client
         /// </summary>
         public TimeSpan Duration { get; private set; }
 
-        public TimerTrackingStateChangedArgs(TimeSpan duration, AppManager.State before, AppManager.State after) {
-            this.Duration = duration;
-            this.Before = before;
-            this.After = after;
+        public TimerTrackingStateChangedArgs(TimeSpan duration, AppManager.State before, AppManager.State after)
+        {
+            Duration = duration;
+            Before = before;
+            After = after;
         }
     }
 }

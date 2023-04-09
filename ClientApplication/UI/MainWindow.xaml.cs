@@ -1,22 +1,10 @@
-﻿using client;
-using PipelinesTest;
+﻿using Hardware.Driver;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using ToggleTracker.UI;
 
 namespace ToggleTracker
 {
@@ -47,9 +35,9 @@ namespace ToggleTracker
             tmr.Tick += Tmr_Tick;
             this.state = new MainFormState();
             this.state.CurrentMode = "Zeit gestoppt";
-
             this.main.DataContext = state;
-            
+            this.state.CurrentCommentVisible = Visibility.Collapsed;
+
             this.projects = new ObservableCollection<Project>();
             var projectsList = GetProjects();
             foreach (var project in projectsList)
@@ -89,7 +77,7 @@ namespace ToggleTracker
 
         System.Windows.Threading.DispatcherTimer tmr;
 
-        private void S_ProjectSelectionChanged(object? sender, client.ProjectSelectedArgs e)
+        private void S_ProjectSelectionChanged(object? sender, ProjectSelectedArgs e)
         {
             foreach (Project p in projects)
             {
@@ -97,7 +85,7 @@ namespace ToggleTracker
             }
         }
 
-        private void TimerStateChanged(object? sender, client.TimerTrackingStateChangedArgs e)
+        private void TimerStateChanged(object? sender, TimerTrackingStateChangedArgs e)
         {
             //if (delay.Elapsed.TotalSeconds > 3)
             //{
@@ -110,15 +98,19 @@ namespace ToggleTracker
                     break;
                 case AppManager.State.Running:
                     this.state.CurrentMode = "Zeit läuft";
+                    this.state.CurrentCommentVisible = Visibility.Visible;
+
                     sw.Reset();
                     sw.Start();
                     tmr.Start();
                     break;
                 case AppManager.State.Stopped:
                     sw.Stop();
+                    this.state.CurrentCommentVisible = Visibility.Collapsed;
                     this.state.CurrentMode = $"Zeit gestoppt! Gemessene Zeit:{sw.Elapsed.ToString("hh':'mm':'ss")}";
                     tmr.Stop();
-                    exp.Write(new Recording(s.SelectedProject, sw.Elapsed, ""));
+                    exp.Write(new Recording(s.SelectedProject, sw.Elapsed, this.state.CurrentComment));
+                    this.state.CurrentComment = "";
                     break;
                     delay.Reset();
                     delay.Start();

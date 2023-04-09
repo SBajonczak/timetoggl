@@ -1,10 +1,9 @@
-﻿using client;
-using System.IO.Ports;
+﻿using System.IO.Ports;
 
-namespace PipelinesTest
+namespace Hardware.Driver
 {
-   
-    public class Start:IDisposable
+
+    public class Start : IDisposable
     {
         Exporter exporter = new Exporter();
         AppManager manager;
@@ -16,15 +15,15 @@ namespace PipelinesTest
         /// </summary>
         /// <value></value>
         public List<Recording> Recordings { get; private set; }
-        
+
         public void StartMeasure()
         {
-            this.manager.sw.Start();
+            manager.sw.Start();
         }
 
         public void EndMeasure()
         {
-            this.manager.sw.Start();
+            manager.sw.Start();
         }
 
 
@@ -37,9 +36,9 @@ namespace PipelinesTest
         }
 
         public Start(List<Project> projects)
-        {            
+        {
             this.projects = projects.ToArray();
-            this.Recordings = new List<Recording>();
+            Recordings = new List<Recording>();
             manager = new AppManager();
             manager.NextElement += OnNext;
             manager.PreviousElement += OnPrevious;
@@ -50,9 +49,9 @@ namespace PipelinesTest
             _port.Open();
 
         }
-        
-        
-        
+
+
+
         public Project SelectedProject { get; private set; }
 
         public event EventHandler<TimerTrackingStateChangedArgs> TimerStateChanged;
@@ -68,14 +67,14 @@ namespace PipelinesTest
         }
         private void OnTimerStateChanged(AppManager.State before, AppManager.State after)
         {
-            if (TimerStateChanged!= null)
+            if (TimerStateChanged != null)
             {
-                TimerStateChanged(this, new TimerTrackingStateChangedArgs(this.CurrentDuration.GetValueOrDefault(new TimeSpan()), before, after));
+                TimerStateChanged(this, new TimerTrackingStateChangedArgs(CurrentDuration.GetValueOrDefault(new TimeSpan()), before, after));
             }
         }
 
-        
-        
+
+
 
 
         private void OnButtonPressed(object sender, StateArgs e)
@@ -85,10 +84,10 @@ namespace PipelinesTest
 
         private void OnNext(object sender, int i)
         {
-            if (this.manager.CurrentState == AppManager.State.Selecting)
+            if (manager.CurrentState == AppManager.State.Selecting)
             {
                 SelectionIndex++;
-                if (SelectionIndex > this.projects.Length - 1)
+                if (SelectionIndex > projects.Length - 1)
                 {
                     SelectionIndex = 0;
                 }
@@ -98,16 +97,16 @@ namespace PipelinesTest
             }
         }
 
-        
+
 
         private void OnPrevious(object sender, int i)
         {
-            if (this.manager.CurrentState == AppManager.State.Selecting)
+            if (manager.CurrentState == AppManager.State.Selecting)
             {
                 SelectionIndex--;
                 if (SelectionIndex < 0)
                 {
-                    SelectionIndex = this.projects.Length - 1;
+                    SelectionIndex = projects.Length - 1;
                 }
                 SelectedProject = projects[SelectionIndex];
                 OnProjectSelectionChanged(SelectedProject);

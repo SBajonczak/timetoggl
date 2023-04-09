@@ -1,6 +1,4 @@
-﻿using PipelinesTest;
-
-namespace client
+﻿namespace Hardware.Driver
 {
     /// <summary>
     /// Project was selected
@@ -12,7 +10,7 @@ namespace client
         /// </summary>
         public Project SelectedProject { get; private set; }
 
-        public ProjectSelectedArgs(Project selectedproject) => this.SelectedProject= selectedproject;
+        public ProjectSelectedArgs(Project selectedproject) => SelectedProject = selectedproject;
 
     }
 }

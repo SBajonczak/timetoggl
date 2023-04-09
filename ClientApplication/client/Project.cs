@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace PipelinesTest
+namespace Hardware.Driver
 {
     /// <summary>
     /// Project definition.
@@ -36,25 +36,25 @@ namespace PipelinesTest
 
         public override string ToString()
         {
-            return $"{this.Title} ({this.ProjectNumber})";
+            return $"{Title} ({ProjectNumber})";
         }
 
         public Project(string[] csvLine)
         {
-            this.Title = csvLine[0];
+            Title = csvLine[0];
             if (csvLine.Length > 1)
             {
-                this.ProjectNumber = csvLine[1];
+                ProjectNumber = csvLine[1];
             }
             if (csvLine.Length > 2)
             {
-                this.HourlyRate = decimal.Parse(csvLine[2]);
+                HourlyRate = decimal.Parse(csvLine[2]);
             }
         }
 
         public string DisplayName
         {
-            get { return $"{this.Title} (#{this.ProjectNumber})"; }
+            get { return $"{Title} (#{ProjectNumber})"; }
         }
     }
 }

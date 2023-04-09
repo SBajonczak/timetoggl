@@ -17,6 +17,13 @@
                 </StackPanel>
             </Border>
 
+            <Border CornerRadius="6" BorderBrush="Gray" Visibility="{Binding CurrentCommentVisible}" Background="LightGray" BorderThickness="2" DockPanel.Dock="Top">
+                <StackPanel  Orientation="Horizontal">
+                    <TextBlock Margin="5,5,0,5">Kommentar zur aktuellen Aufnahme</TextBlock>
+                    <TextBox Margin="5,5,0,5" MinWidth="220" Text="{Binding CurrentComment}"></TextBox>
+                </StackPanel>
+            </Border>
+            
             <ItemsControl Name="container" >
                 <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -36,8 +43,6 @@
                             </DataTrigger>
                         </DataTemplate.Triggers>
                         </DataTemplate>
-                
-                    
                     </ItemsControl.ItemTemplate>
             </ItemsControl>
         </StackPanel>

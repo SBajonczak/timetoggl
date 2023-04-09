@@ -1,4 +1,4 @@
-namespace PipelinesTest
+namespace Hardware.Driver
 {
     /// <summary>
     /// Project definition.
@@ -7,25 +7,25 @@ namespace PipelinesTest
     {
         public Recording(Project project, TimeSpan ts, string comment)
         {
-            this.Project = project.Title;
-            this.Tag = project.ProjectNumber;
-            this.Duration = ts;
-            this.Comment= comment;
-            this.Date = DateTimeOffset.Now;
+            Project = project.Title;
+            Tag = project.ProjectNumber;
+            Duration = ts;
+            Comment = comment;
+            Date = DateTimeOffset.Now;
         }
 
         public string Project { get; set; }
 
         public string Tag { get; set; }
-        
-        public DateTimeOffset Date {get;set;}
+
+        public DateTimeOffset Date { get; set; }
         public string Comment { get; set; }
 
         public TimeSpan Duration { get; set; }
 
         public override string ToString()
         {
-            return $"{this.Project};{this.Tag};{this.Duration.ToString()};{Date.ToString("dd.MM.yyyy")};{Comment}";
+            return $"{Project};{Tag};{Duration.ToString()};{Date.ToString("dd.MM.yyyy")};{Comment}";
         }
     }
 }

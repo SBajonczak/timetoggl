@@ -1,6 +1,6 @@
-using static PipelinesTest.AppManager;
+using static Hardware.Driver.AppManager;
 
-namespace PipelinesTest
+namespace Hardware.Driver
 {
     public class StateArgs
     {
@@ -9,8 +9,8 @@ namespace PipelinesTest
 
         public StateArgs(State before, State after)
         {
-            this.Before = before;
-            this.After = after;
+            Before = before;
+            After = after;
         }
     }
 }

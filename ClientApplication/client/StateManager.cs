@@ -1,7 +1,7 @@
 using System.Diagnostics;
 
 
-namespace PipelinesTest
+namespace Hardware.Driver
 {
 
 
@@ -69,7 +69,7 @@ namespace PipelinesTest
         public AppManager()
         {
             sw = new Stopwatch();
-            this.CurrentState = State.Stopped;
+            CurrentState = State.Stopped;
         }
 
 
@@ -84,8 +84,8 @@ namespace PipelinesTest
                     if (inputType == InputType.ButtonPressed)
                     {
                         sw.Start();
-                        OnSelected(this.CurrentState, State.Selecting);
-                        this.CurrentState = State.Selecting;
+                        OnSelected(CurrentState, State.Selecting);
+                        CurrentState = State.Selecting;
                     }
 
                     break;
@@ -101,7 +101,7 @@ namespace PipelinesTest
                         case InputType.ButtonPressed:
                             sw.Start();
                             OnSelected(CurrentState, State.Running);
-                            this.CurrentState = State.Running;
+                            CurrentState = State.Running;
                             break;
 
                     }
@@ -109,10 +109,10 @@ namespace PipelinesTest
                 case State.Running:
                     if (inputType == InputType.ButtonPressed)
                     {
-                        this.ElapsedTime = sw.Elapsed;
+                        ElapsedTime = sw.Elapsed;
                         sw.Stop();
                         OnSelected(CurrentState, State.Stopped);
-                        this.CurrentState = State.Stopped;
+                        CurrentState = State.Stopped;
                     }
                     break;
 
