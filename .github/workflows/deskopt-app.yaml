@@ -46,3 +46,9 @@ jobs:
         Configuration: ${{ matrix.configuration }}
 
 
+    # Restore the application to populate the obj folder with RuntimeIdentifiers
+    - name: Restore the application
+      run: msbuild ClientApplication/ToggleTracker.sln /p:Configuration=$env:Configuration
+      env:
+        Configuration: ${{ matrix.configuration }}
+
