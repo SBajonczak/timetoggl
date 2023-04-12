@@ -37,6 +37,4 @@ jobs:
           pip install --upgrade platformio
 
       - name: Run build
-        with:
-          path: ~/DeviceApplication
-        run: pio run -e wemos_d1_mini32
+        run: cd DeviceApplication && pio run -e wemos_d1_mini32
